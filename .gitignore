@@ -5,3 +5,4 @@ __pycache__/
 *.db
 .claude/hooks/blocked.log
 .claude/settings.local.json
+*_備份.docx
