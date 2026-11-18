@@ -105,9 +105,9 @@ BEST = (
 )
 WORST = (
     "coder。第一次實作（序號 5）用了 21 個 turns、455,263 token，是所有子代理中最多的；"
-    "它兩次想把暫存驗證腳本寫到系統 scratchpad，都被 guard_paths.py hook 擋下（只能寫 app/ 與 requirements.txt），"
-    "另外有 4 次 Bash 指令因為用了 heredoc 或「DATABASE_URL=... python」這種環境變數前綴寫法，不符合允許的 Bash(python:*) 而被拒，"
-    "最後改把暫存腳本放進 app/_smoke_check.py 跑完再刪除，等於繞了一圈。"
+    "在兩次執行（序號 5 實作、序號 8 修正）中，它各有一次想把暫存驗證腳本寫到系統 scratchpad，都被 guard_paths.py hook 擋下（只能寫 app/ 與 requirements.txt），"
+    "兩次執行也共有 4 次 Bash 指令因為用了 heredoc、export 或「DATABASE_URL=... python」這種環境變數前綴寫法，不符合允許的 Bash(python:*) 而被拒；"
+    "序號 5 最後把暫存腳本放進 app/_smoke_check.py 跑完再刪除，等於繞了一圈。"
 )
 ADJUST = (
     "實際做過的調整：(1) 一開始用 session 內建的 Agent 工具載入不到自訂子代理，改成以 claude -p --agent <名稱> 執行，"
@@ -160,7 +160,7 @@ fill_par(par_with("繳交日期"), [TODAY])
 fill_par(par_with("GitHub repo 連結"), [GITHUB])
 
 # Part B 比較表
-tb = d.tables[2]
+tb = next(t for t in d.tables if t.rows[0].cells[0].text.strip() == "排名")
 for i, r in enumerate(evals, 1):
     row = tb.rows[i]
     s = r["scores"]
@@ -180,7 +180,7 @@ for i, r in enumerate(evals, 1):
     assert row.cells[0].paragraphs[0].text.strip() == str(i)
 
 fill_par(par_with("我的選擇與理由"), [choice])
-fill_par(par_with("輸入驗證規則"), [VALIDATION])
+fill_par(par_with("輸入驗證規則："), [VALIDATION])
 fill_par(par_with("測試總數"), [str(t_total), str(t_pass), str(t_fail)])
 fill_par(par_with("貼上 pytest -v"), ["（截圖）"], keep_highlight=True)
 for p in d.paragraphs:
@@ -190,7 +190,7 @@ fill_par(par_with("圖 2"), ["coder（序號 5，第一次實作）"])
 fill_par(par_with("圖 3"), ["tester（序號 6，撰寫並執行 pytest）"])
 
 # 6.1 比較表
-t61 = d.tables[4]
+t61 = next(t for t in d.tables if "單一 Agent" in t.rows[0].cells[1].text)
 cells = {
     1: (f"未分段（B、C 由同一個 session 連續完成，合計見下一列）", f"{partB_time} 秒（3 個 db-evaluator 並行實際 {partB_par} 秒；已扣除等待登入 CLI 的 {blocked} 秒）"),
     2: ("未分段（合計見下一列）", f"{n(tokB)}（3 個 db-evaluator 加總）"),
@@ -212,11 +212,11 @@ for r in p.runs:
 assert "/cost" not in p.text, p.text
 
 fill_par(par_with("分析："), [ANALYSIS])
-fill_par(par_with("表現最好"), [BEST])
-fill_par(par_with("表現最差"), [WORST])
-fill_par(par_with("我的調整"), [ADJUST])
+fill_par(par_with("表現最好："), [BEST])
+fill_par(par_with("表現最差："), [WORST])
+fill_par(par_with("我的調整："), [ADJUST])
 fill_par([p for p in d.paragraphs if any(is_hl(r) and "3～5 句" in r.text for r in p.runs)][0], ["（心得待填）"], keep_highlight=True)
-fill_par(par_with("審查結果"), [SECURITY])
+fill_par(par_with("審查結果："), [SECURITY])
 
 # 檢查：剩下的螢光只能是（截圖）與（心得待填），且不能殘留【】
 left = []
