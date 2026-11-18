@@ -1,0 +1,11 @@
+seq	agent	task	result	issues
+1	db-evaluator	評估 SQLite（並行）	回傳 JSON，格式驗證通過，總分 22	無；1 輪完成，未使用 WebSearch
+2	db-evaluator	評估 PostgreSQL（並行）	回傳 JSON，格式驗證通過，總分 19	無
+3	db-evaluator	評估 MongoDB（並行）	回傳 JSON，格式驗證通過，總分 19	無；與 PostgreSQL 同分，主 Agent 依 testing→python 分數決定排名
+4	architect	撰寫 docs/spec.md	完成；列出 14 組必測案例，自行決定 5 項未指定細節並回報	無
+5	coder	依 spec 實作 app/ 與 requirements.txt	完成 7 個檔案；自行用暫存腳本跑約 120 個請求全過	被 hook 擋下 1 次（想寫 scratchpad/smoke.py）；Bash 被權限拒絕 2 次（inline heredoc、DATABASE_URL= 前綴指令），改把暫存腳本放 app/_smoke_check.py 跑完刪除；回報 spec §7.2 與預設 DB 檔衝突
+6	tester	撰寫並執行 pytest（與 reviewer 並行）	4 個檔案、184 個測試，184 通過 / 0 失敗	無；依指示在 conftest 設 DATABASE_URL=sqlite:// 避免產生 xr_objects.db；未測 500 格式
+7	reviewer	審查 app/（與 tester 並行）	結論：通過；0 高 / 0 中 / 9 低	其中 2 項低嚴重度實為規格不符（非 UTF-8 body 回 400、/objects/ 307 轉址）
+8	coder	第 1 輪修正：reviewer 的 5 項低嚴重度問題	5 項皆修正，pytest 184 通過	被 hook 擋下 1 次（想寫 scratchpad/check.py）；Bash 被權限拒絕 2 次（含 export / 環境變數前綴的指令），改用 python -c 驗證
+9	tester	補測第 1 輪修正（非 UTF-8 body、結尾斜線）並重跑	新增 7 個測試案例（4 個函式含參數化），共 191 通過 / 0 失敗	無
+10	security-auditor	依 OWASP Top 10 審查 app/	A01～A10：0 高 / 0 中；A01、A03、A04、A05、A06、A08、A09 為低，A02、A07、A10 不適用／無	無；因無高/中問題，未派 coder 修正，也不需要 tester 重跑

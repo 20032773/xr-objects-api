@@ -1,0 +1,7 @@
+*.docx
+~$*.docx
+__pycache__/
+.pytest_cache/
+*.db
+.claude/hooks/blocked.log
+.claude/settings.local.json

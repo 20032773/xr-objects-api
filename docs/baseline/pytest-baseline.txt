@@ -1,0 +1,67 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\k0983\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\python.exe
+cachedir: .pytest_cache
+rootdir: D:\claudeagant\homework\xr-baseline
+plugins: anyio-4.13.0, xonsh-0.22.8
+collecting ... collected 49 items
+
+tests/test_objects.py::test_create_returns_201_with_defaults_and_location PASSED [  2%]
+tests/test_objects.py::test_create_trims_name PASSED                     [  4%]
+tests/test_objects.py::test_create_missing_required_field_422[scene_id] PASSED [  6%]
+tests/test_objects.py::test_create_missing_required_field_422[name] PASSED [  8%]
+tests/test_objects.py::test_create_missing_required_field_422[type] PASSED [ 10%]
+tests/test_objects.py::test_create_invalid_scalar_fields_422[blank-name] PASSED [ 12%]
+tests/test_objects.py::test_create_invalid_scalar_fields_422[long-name] PASSED [ 14%]
+tests/test_objects.py::test_create_invalid_scalar_fields_422[bad-scene-chars] PASSED [ 16%]
+tests/test_objects.py::test_create_invalid_scalar_fields_422[empty-scene] PASSED [ 18%]
+tests/test_objects.py::test_create_invalid_scalar_fields_422[bad-type] PASSED [ 20%]
+tests/test_objects.py::test_create_invalid_scalar_fields_422[visible-not-bool] PASSED [ 22%]
+tests/test_objects.py::test_create_non_positive_scale_422[scale0] PASSED [ 24%]
+tests/test_objects.py::test_create_non_positive_scale_422[scale1] PASSED [ 26%]
+tests/test_objects.py::test_create_non_unit_quaternion_422[rotation0] PASSED [ 28%]
+tests/test_objects.py::test_create_non_unit_quaternion_422[rotation1] PASSED [ 30%]
+tests/test_objects.py::test_create_accepts_normalized_quaternion PASSED  [ 32%]
+tests/test_objects.py::test_create_invalid_vector_422[out-of-range] PASSED [ 34%]
+tests/test_objects.py::test_create_invalid_vector_422[string] PASSED     [ 36%]
+tests/test_objects.py::test_create_invalid_vector_422[bool] PASSED       [ 38%]
+tests/test_objects.py::test_create_invalid_vector_422[missing-z] PASSED  [ 40%]
+tests/test_objects.py::test_create_invalid_vector_422[extra-key] PASSED  [ 42%]
+tests/test_objects.py::test_create_rejects_nan_and_infinity[NaN] PASSED  [ 44%]
+tests/test_objects.py::test_create_rejects_nan_and_infinity[Infinity] PASSED [ 46%]
+tests/test_objects.py::test_create_rejects_nan_and_infinity[-Infinity] PASSED [ 48%]
+tests/test_objects.py::test_create_rejects_unknown_fields[extra0] PASSED [ 51%]
+tests/test_objects.py::test_create_rejects_unknown_fields[extra1] PASSED [ 53%]
+tests/test_objects.py::test_create_rejects_unknown_fields[extra2] PASSED [ 55%]
+tests/test_objects.py::test_create_metadata_limits PASSED                [ 57%]
+tests/test_objects.py::test_get_object_and_404 PASSED                    [ 59%]
+tests/test_objects.py::test_invalid_path_id_422[0] PASSED                [ 61%]
+tests/test_objects.py::test_invalid_path_id_422[-1] PASSED               [ 63%]
+tests/test_objects.py::test_invalid_path_id_422[abc] PASSED              [ 65%]
+tests/test_objects.py::test_list_filter_and_pagination PASSED            [ 67%]
+tests/test_objects.py::test_list_invalid_query_422[params0] PASSED       [ 69%]
+tests/test_objects.py::test_list_invalid_query_422[params1] PASSED       [ 71%]
+tests/test_objects.py::test_list_invalid_query_422[params2] PASSED       [ 73%]
+tests/test_objects.py::test_list_invalid_query_422[params3] PASSED       [ 75%]
+tests/test_objects.py::test_list_empty PASSED                            [ 77%]
+tests/test_objects.py::test_put_replaces_and_resets_optional_fields PASSED [ 79%]
+tests/test_objects.py::test_put_validation_and_404 PASSED                [ 81%]
+tests/test_objects.py::test_patch_updates_only_given_fields PASSED       [ 83%]
+tests/test_objects.py::test_patch_invalid_422[empty] PASSED              [ 85%]
+tests/test_objects.py::test_patch_invalid_422[null-name] PASSED          [ 87%]
+tests/test_objects.py::test_patch_invalid_422[null-position] PASSED      [ 89%]
+tests/test_objects.py::test_patch_invalid_422[bad-scale] PASSED          [ 91%]
+tests/test_objects.py::test_patch_invalid_422[unknown-field] PASSED      [ 93%]
+tests/test_objects.py::test_patch_invalid_422[partial-vector] PASSED     [ 95%]
+tests/test_objects.py::test_patch_missing_404 PASSED                     [ 97%]
+tests/test_objects.py::test_delete_then_get_404 PASSED                   [100%]
+
+============================== warnings summary ===============================
+C:\Users\k0983\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\anyio\pytest_plugin.py:14
+  C:\Users\k0983\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\anyio\pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.
+  The CallSpec2 alias will be removed in pytest 10.
+  Update imports to use CallSpec instead.
+  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed
+    from _pytest.python import CallSpec2
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 49 passed, 1 warning in 0.85s ========================
