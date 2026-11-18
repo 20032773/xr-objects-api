@@ -211,6 +211,19 @@ for r in p.runs:
                                 "數據取自 Claude Code 無頭模式 JSON 結果中的 duration_ms 與 usage（token＝input＋output＋cache 建立＋cache 讀取），團隊版耗時以 date +%s 時間戳相減，詳見 docs/run-log.md。")
 assert "/cost" not in p.text, p.text
 
+# 2.3：說明無頭模式下的實際做法
+p = par_with("只預先允許 pytest 指令")
+r = [x for x in p.runs if "只預先允許 pytest 指令" in x.text][0]
+r.text = ("只預先允許 pytest 指令，其他 Bash 指令在互動模式下執行前都會詢問使用者。"
+          "本次子代理以無頭模式（claude -p --agent）執行，無法跳出詢問，因此改為每次派工用 --allowedTools 明確指定該角色可用的工具"
+          "（coder 可用 python、pip；tester 只能用 pytest；reviewer、security-auditor 只有讀檔工具），詳見 docs/run-log.md。")
+
+# 4.1：GET /objects 實際為分頁列表
+t41 = next(t for t in d.tables if t.rows[0].cells[0].text.strip() == "方法")
+c = t41.rows[1].cells[2].paragraphs[0]
+assert c.text == "取得所有場景物件", c.text
+c.runs[0].text = "取得場景物件列表（分頁：limit 預設 50、範圍 1～100，offset ≥ 0；回傳 items 與 total）"
+
 fill_par(par_with("分析："), [ANALYSIS])
 fill_par(par_with("表現最好："), [BEST])
 fill_par(par_with("表現最差："), [WORST])
